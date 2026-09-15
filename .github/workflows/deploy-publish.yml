@@ -28,8 +28,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm install --no-fund --no-audit
+      - name: Cache node_modules
+        id: cache-npm
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          # Crea un candado único basado en la versión de Node y tu package-lock
+          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        # Solo instala si la caché no existía para esta versión
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm install --no-fund --no-audit
   unit-test:
     needs: install-deps
     runs-on: ubuntu-latest
@@ -40,7 +49,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+      - name: Restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          # Usa exactamente la misma llave para descargar la carpeta guardada en JOB 1
+          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
       - name: Run unit tests
         run: npm run test:coverage
 
