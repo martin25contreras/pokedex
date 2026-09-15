@@ -56,7 +56,7 @@ jobs:
           # Usa exactamente la misma llave para descargar la carpeta guardada en JOB 1
           key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
       - name: Run unit tests
-        run: npm run test:coverage
+        run: npm run test
 
       - name: Save coverage report
         uses: actions/upload-artifact@v4
