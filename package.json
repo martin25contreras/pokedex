@@ -15,7 +15,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@testing-library/react": "^16.3.3",
     "next": "16.3.5",
     "postcss": "^8.5.28",
     "react": "19.2.8",
@@ -30,6 +29,7 @@
     "@storybook/nextjs-vite": "^10.6.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
