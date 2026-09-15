@@ -23,11 +23,12 @@ jobs:
 
     steps:
       - name: Pokedex Repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v4
       - name: Setup Node.js enviroment
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci --legacy-peer-deps --no-fund --no-audit
       - run: npm test
+      - run: npm run build
