@@ -61,16 +61,6 @@ jobs:
           path: node_modules
           key: v2-node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
-      # ==========================================
-      # PASOS DE DIAGNÓSTICO (RAYOS X)
-      # ==========================================
-      - name: Diagnóstico 1 - Verificar package.json
-        run: cat package.json | grep jest || echo "¡JEST NO ESTÁ EN EL PACKAGE.JSON DE GITHUB!"
-
-      - name: Diagnóstico 2 - Verificar instalación real
-        run: ls -la node_modules/.bin | grep jest || echo "¡JEST NO SE INSTALÓ EN NODE_MODULES!"
-      # ==========================================
-
       - name: Run unit tests
         run: npm run test:coverage
 
