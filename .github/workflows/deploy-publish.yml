@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Pokedex
 
 on:
@@ -16,50 +13,69 @@ concurrency:
 jobs:
   install-deps:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [20.x, 22.x]
 
     steps:
-      - name: Pokedex Repository
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setup Node.js enviroment
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Cache node_modules
         id: cache-npm
         uses: actions/cache@v4
         with:
           path: node_modules
-          # Crea un candado único basado en la versión de Node y tu package-lock
-          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+          # Cambiamos a v2 para obligar a GitHub a ignorar cachés viejas
+          key: v2-node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+
       - name: Install dependencies
-        # Solo instala si la caché no existía para esta versión
         if: steps.cache-npm.outputs.cache-hit != 'true'
-        run: npm install --no-fund --no-audit
+        # Forzamos instalar dependencias de desarrollo
+        run: npm install --include=dev --no-fund --no-audit
+
   unit-test:
     needs: install-deps
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Restore node_modules
         uses: actions/cache@v4
         with:
           path: node_modules
-          # Usa exactamente la misma llave para descargar la carpeta guardada en JOB 1
-          key: node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+          key: v2-node-modules-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+
+      # ==========================================
+      # PASOS DE DIAGNÓSTICO (RAYOS X)
+      # ==========================================
+      - name: Diagnóstico 1 - Verificar package.json
+        run: cat package.json | grep jest || echo "¡JEST NO ESTÁ EN EL PACKAGE.JSON DE GITHUB!"
+
+      - name: Diagnóstico 2 - Verificar instalación real
+        run: ls -la node_modules/.bin | grep jest || echo "¡JEST NO SE INSTALÓ EN NODE_MODULES!"
+      # ==========================================
+
       - name: Run unit tests
-        run: npm run test
+        run: npm run test:coverage
 
       - name: Save coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          name: coverage-report-node-${{ matrix.node-version }}
           path: coverage
