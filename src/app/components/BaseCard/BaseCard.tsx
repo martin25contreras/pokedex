@@ -7,11 +7,12 @@ export interface BaseCardProps {
 }
 
 export function BaseCard({
-  text = "Pokedex",
+  text,
   image,
   className = "",
 }: BaseCardProps) {
   const imageValid = image || "/images/pokeball.jpg";
+  const textValid = text || "Pokedex";
   return (
     <div
       className={`flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md max-w-xs w-full ${className}`}
@@ -20,7 +21,7 @@ export function BaseCard({
       <div className="relative h-52 w-full overflow-hidden rounded-t-xl">
         <Image
           src={imageValid}
-          alt={text}
+          alt={textValid}
           className="object-contain object-center p-2"
           fill
           sizes="(max-width: 358px) 100vw, 33vw"
@@ -30,7 +31,7 @@ export function BaseCard({
       {/* Mitad Inferior: El Título */}
       <div className="flex flex-1 items-center justify-center p-4">
         <h3 className="text-lg font-bold tracking-tight text-slate-900 capitalize text-center">
-          {text}
+          {textValid}
         </h3>
       </div>
     </div>

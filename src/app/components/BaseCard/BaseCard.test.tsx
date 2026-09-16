@@ -1,10 +1,16 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { BaseCard } from "./BaseCard";
 
+jest.mock("next/image", () => ({
+  __esModule: true,
+  default: ({fill, ...props}: unknown) => {
+    return <img {...props} />;
+  },
+}));
 describe("BaseCard", () => {
-  const user = userEvent.setup();
 
   test("render correctly BaseCard with text and image", () => {
     render(<BaseCard text="Test text" image="test-image.jpg" />);
@@ -13,15 +19,16 @@ describe("BaseCard", () => {
     expect(screen.getByRole("img", { name: "Test text" })).toBeInTheDocument();
   });
   test("render correctly BaseCard with image exist and text is not provided", () => {
-    render(<BaseCard text= '' image="test-image.jpg" />);
+    render(<BaseCard text="" image="test-image.jpg" />);
 
     expect(screen.getByText("Pokedex")).toBeInTheDocument();
   });
   test("render correctly BaseCard with text exist and image is not provided", () => {
-    render(<BaseCard text="Test text" image=""/>);
+    render(<BaseCard text="Test text" image="" />);
 
-    expect(
-      screen.getByRole("img", { name: "Test text" }),
-    ).toHaveAttribute("src", "/images/pokeball.jpg");
+    expect(screen.getByRole("img", { name: "Test text" })).toHaveAttribute(
+      "src",
+      "/images/pokeball.jpg",
+    );
   });
 });
