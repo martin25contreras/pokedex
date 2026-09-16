@@ -1,10 +1,13 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 export interface InfoCardProps {
   title: string;
   description: string;
   types: Array<string>;
-  stats: Array<Record<string, unknown>>;
+  stats: Array<{
+    label: string;
+    value: string;
+  }>;
   abilities: {
     text: string;
     img: string;
@@ -39,6 +42,19 @@ export function InfoCard({
               className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full uppercase tracking-wider border border-blue-200"
             >
               {type}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {stats.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-5">
+          {stats.map((stat, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full uppercase tracking-wider border border-blue-200"
+            >
+              {stat.label}
             </span>
           ))}
         </div>
