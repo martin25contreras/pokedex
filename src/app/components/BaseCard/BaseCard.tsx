@@ -1,6 +1,8 @@
+import Image from "next/image";
+
 export interface BaseCardProps {
-  text?: string;
-  image?: string;
+  text: string;
+  image: string;
   className?: string;
 }
 
@@ -9,18 +11,17 @@ export function BaseCard({
   image,
   className = "",
 }: BaseCardProps) {
-    const imageValid= image || "/images/pokeball.jpg";
+  const imageValid = image || "/images/pokeball.jpg";
   return (
     <div
       className={`flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md max-w-xs w-full ${className}`}
     >
       {/* Mitad Superior: La Imagen */}
-      {/* Le damos un fondo suave (slate-100) por si la imagen tarda en cargar o tiene transparencias */}
-      <div className="h-48 w-full bg-slate-100">
-        <img
+      <div className="relative h-48 w-full overflow-hidden rounded-t-xl">
+        <Image
           src={imageValid}
           alt={text}
-          // object-cover hace que la imagen llene el espacio sin deformarse (como background-size: cover)
+          fill
           className="h-full w-full object-cover object-center"
         />
       </div>

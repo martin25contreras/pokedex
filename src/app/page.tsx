@@ -1,5 +1,6 @@
 import Image from "next/image";
+import { HomeView } from "./views/HomeView";
 
 export default function Home() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return <HomeView />
 }

@@ -17,7 +17,7 @@ export function CardSlider({
   emptyMessage,
   className = "",
   renderItem
-}: CardSliderProps<any>) {
+}: CardSliderProps<unknown>) {
   if (elements.length === 0) {
     return (
       <div className="flex w-full items-center justify-center p-8 text-slate-500 border-2 border-dashed border-slate-300 rounded-xl">
