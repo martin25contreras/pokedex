@@ -57,7 +57,7 @@ export function HomeView() {
           <Input
             buttonText={"Buscar"}
             onAction={function (value: string): void {
-              alert(value);
+              setSearchTerm(value)
             }}
           />
           {/* Si usas tu ActionInput sería algo así:
@@ -69,20 +69,22 @@ export function HomeView() {
       </section>
 
       {/* Carrusel de Resultados */}
-      <section>
-        <CardSlider
-          label="Lista de Pokémons"
-          elements={filteredPokemons}
-          emptyMessage="No se encontró ningún Pokémon con ese nombre."
-          renderItem={(pokemon) => (
-            <BaseCard
-              text={pokemon.name}
-              image={pokemon.image}
-              //   imageAlt={pokemon.name}
-            />
-          )}
-        />
-      </section>
+      {searchTerm.length > 0 && (
+        <section>
+          <CardSlider
+            label="Lista de Pokémons"
+            elements={filteredPokemons}
+            emptyMessage="No se encontró ningún Pokémon con ese nombre."
+            renderItem={(pokemon) => (
+              <BaseCard
+                text={pokemon.name}
+                image={pokemon.image}
+                //   imageAlt={pokemon.name}
+              />
+            )}
+          />
+        </section>
+      )}
     </div>
   );
 }
