@@ -26,7 +26,7 @@ const MOCK_POKEMONS: { name: string; image: string; id: number }[] = [
   },
   {
     id: 2,
-    name: "Squirtle",
+    name: "Ivisaurs",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },

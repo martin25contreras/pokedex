@@ -17,12 +17,13 @@ export function BaseCard({
       className={`flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md max-w-xs w-full ${className}`}
     >
       {/* Mitad Superior: La Imagen */}
-      <div className="relative h-48 w-full overflow-hidden rounded-t-xl">
+      <div className="relative h-52 w-full overflow-hidden rounded-t-xl">
         <Image
           src={imageValid}
           alt={text}
+          className="object-contain object-center p-2"
           fill
-          className="h-full w-full object-cover object-center"
+          sizes="(max-width: 358px) 100vw, 33vw"
         />
       </div>
 

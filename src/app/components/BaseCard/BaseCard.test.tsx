@@ -13,12 +13,12 @@ describe("BaseCard", () => {
     expect(screen.getByRole("img", { name: "Test text" })).toBeInTheDocument();
   });
   test("render correctly BaseCard with image exist and text is not provided", () => {
-    render(<BaseCard image="test-image.jpg" />);
+    render(<BaseCard text= '' image="test-image.jpg" />);
 
     expect(screen.getByText("Pokedex")).toBeInTheDocument();
   });
   test("render correctly BaseCard with text exist and image is not provided", () => {
-    render(<BaseCard text="Test text" />);
+    render(<BaseCard text="Test text" image=""/>);
 
     expect(
       screen.getByRole("img", { name: "Test text" }),
