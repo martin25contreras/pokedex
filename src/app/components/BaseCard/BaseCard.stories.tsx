@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { StoryObj } from "@storybook/react-vite";
 import { BaseCard } from "./BaseCard";
 
 const meta = {
@@ -6,7 +6,7 @@ const meta = {
   component: BaseCard,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-} satisfies Meta<typeof BaseCard>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -23,6 +23,7 @@ export const Default: Story = {
 export const LongTitle: Story = {
   args: {
     text: "Pikachu con gorra de Ash Ketchum",
-    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+    image:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
   },
 };
